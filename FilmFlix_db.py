@@ -1,11 +1,12 @@
 import sqlite3
 import os
 
+
 # Handles DB operations for FilmFlix
 class Filmflix_db:
     def __init__(self):
         base_dir = os.path.abspath(os.path.dirname(__file__))
-        db_path = os.path.join(base_dir, 'filmflix.db')
+        db_path = os.path.join(base_dir, "filmflix.db")
         self.con = sqlite3.connect(db_path)
         self.cursor = self.con.cursor()
 
@@ -22,4 +23,14 @@ class Filmflix_db:
         sql = "INSERT INTO films (title, year, rating, duration, genre) VALUES (?, ?, ?, ?, ?)"
         values = (title, year, rating, duration, genre)
         self.cursor.execute(sql, values)
+        self.con.commit()
+
+    def film_exists(self, film_id):
+        sql = "SELECT 1 FROM films WHERE id = ?"
+        self.cursor.execute(sql, (film_id,))
+        return self.cursor.fetchone() is not None
+
+    def delete_film(self, film_id):
+        sql = "DELETE FROM films WHERE id = ?"
+        self.cursor.execute(sql, (film_id,))
         self.con.commit()

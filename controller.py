@@ -18,8 +18,9 @@ def all_films():
     films = db.get_all_films()
     db.close()
 
-    columns = ['Film ID', 'Title', 'Year Released', 'Rating', 'Duration', 'Genre']
+    columns = ["Film ID", "Title", "Year Released", "Rating", "Duration", "Genre"]
     return render_template("films.html", films=films, columns=columns)
+
 
 @app.route("/add_film", methods=["GET", "POST"])
 def add_film():
@@ -29,7 +30,9 @@ def add_film():
         title = request.form.get("title")
         year = request.form.get("year")
         if not (year.isdigit() and len(year) == 4):
-            return render_template("addfilm.html", error="Year must be a 4-digit number")
+            return render_template(
+                "addfilm.html", error="Year must be a 4-digit number"
+            )
         rating = request.form.get("rating")
         duration = request.form.get("duration")
         genre = request.form.get("genre")
@@ -45,9 +48,36 @@ def add_film():
     return render_template("addfilm.html")
 
 
-@app.route("/delete_film")
+@app.route("/delete_film", methods=["GET", "POST"])
 def delete_film():
-    return "<h2>Delete Film TODO</h2>"
+    from FilmFlix_db import Filmflix_db
+
+    db = Filmflix_db()
+    films = db.get_all_films()
+
+    if request.method == "POST":
+        film_id_str = request.form.get("filmID")
+
+        if not film_id_str or not film_id_str.isdigit():
+            db.close()
+            return render_template(
+                "deletefilm.html", error="Please select a film", films=films
+            )
+
+        film_id = int(film_id_str)
+
+        if not db.film_exists(film_id):
+            db.close()
+            return render_template(
+                "deletefilm.html", error="No film with that ID found", films=films
+            )
+
+        db.delete_film(film_id)
+        db.close()
+        return render_template("deletefilm.html", success=True, films=films)
+
+    db.close()
+    return render_template("deletefilm.html", films=films)
 
 
 @app.route("/amend_film")
