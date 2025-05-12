@@ -11,8 +11,14 @@ def home():
 
 @app.route("/films")
 def all_films():
-    return "<h2>All Films TODO</h2>"
+    from FilmFlix_db import Filmflix_db
 
+    db = Filmflix_db()
+    films = db.get_all_films()
+    db.close()
+
+    columns = ['Film ID', 'Title', 'Year Released', 'Rating', 'Duration', 'Genre']
+    return render_template("films.html", films=films, columns=columns)
 
 @app.route("/add_film")
 def add_film():

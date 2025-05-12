@@ -1,0 +1,23 @@
+{% extends "base.html" %} {% block title %}All Films{% endblock %} {% block
+content %}
+<h2 class="w3-center w3-text-blue">All Films</h2>
+
+<table class="w3-table w3-bordered w3-striped w3-white">
+    <thead>
+        <tr>
+            {% for col in columns %}
+            <th>{{ col }}</th>
+            {% endfor %}
+        </tr>
+    </thead>
+    <tbody>
+        {% for film in films %}
+        <tr>
+            {% for item in film %}
+            <td>{{ item }}</td>
+            {% endfor %}
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
