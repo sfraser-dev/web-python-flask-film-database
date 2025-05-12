@@ -1,5 +1,6 @@
 from flask import Flask, render_template
 from dotenv import load_dotenv
+from flask import request
 
 app = Flask(__name__)
 
@@ -20,9 +21,28 @@ def all_films():
     columns = ['Film ID', 'Title', 'Year Released', 'Rating', 'Duration', 'Genre']
     return render_template("films.html", films=films, columns=columns)
 
-@app.route("/add_film")
+@app.route("/add_film", methods=["GET", "POST"])
 def add_film():
-    return "<h2>Add Film TODO</h2>"
+    from FilmFlix_db import Filmflix_db
+
+    if request.method == "POST":
+        title = request.form.get("title")
+        year = request.form.get("year")
+        if not (year.isdigit() and len(year) == 4):
+            return render_template("addfilm.html", error="Year must be a 4-digit number")
+        rating = request.form.get("rating")
+        duration = request.form.get("duration")
+        genre = request.form.get("genre")
+
+        if not all([title, year, rating, duration, genre]):
+            return render_template("addfilm.html", error="All fields required")
+
+        db = Filmflix_db()
+        db.add_film(title, year, rating, duration, genre)
+        db.close()
+        return render_template("addfilm.html", success=True)
+
+    return render_template("addfilm.html")
 
 
 @app.route("/delete_film")

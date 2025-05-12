@@ -17,3 +17,9 @@ class Filmflix_db:
     def close(self):
         self.cursor.close()
         self.con.close()
+
+    def add_film(self, title, year, rating, duration, genre):
+        sql = "INSERT INTO films (title, year, rating, duration, genre) VALUES (?, ?, ?, ?, ?)"
+        values = (title, year, rating, duration, genre)
+        self.cursor.execute(sql, values)
+        self.con.commit()
