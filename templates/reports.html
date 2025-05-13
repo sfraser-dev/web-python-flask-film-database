@@ -2,11 +2,7 @@
 block content %}
 <h2 class="w3-center w3-text-blue">Search Films</h2>
 
-<form
-    class="w3-container"
-    method="POST"
-    action="{{ url_for('search') }}"
->
+<form class="w3-container" method="POST" action="{{ url_for('search') }}">
     <label class="w3-text-black">Search By</label>
     <select class="w3-select w3-border w3-round" name="field" required>
         <option value="" disabled selected>Choose a field</option>
@@ -32,6 +28,8 @@ block content %}
 
 {% if error %}
 <p class="w3-panel w3-red w3-padding">{{ error }}</p>
+{% endif %} {% if message %}
+<p class="w3-panel w3-yellow w3-padding">{{ message }}</p>
 {% endif %} {% if results %}
 <h3 class="w3-margin-top">Results:</h3>
 <table class="w3-table w3-bordered w3-striped w3-white">

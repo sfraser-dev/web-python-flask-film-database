@@ -158,6 +158,14 @@ def search():
             )
         db.close()
 
+        if not results:
+            return render_template(
+                "reports.html",
+                columns=columns,
+                results=[],
+                message="No matching films found.",
+            )
+
         return render_template("reports.html", columns=columns, results=results)
 
     return render_template("reports.html", columns=columns, results=[])
