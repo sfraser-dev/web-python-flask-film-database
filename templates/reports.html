@@ -1,0 +1,55 @@
+{% extends "base.html" %} {% block title %}Search / Reports{% endblock %} {%
+block content %}
+<h2 class="w3-center w3-text-blue">Search Films</h2>
+
+<form
+    class="w3-container"
+    method="POST"
+    action="{{ url_for('search') }}"
+>
+    <label class="w3-text-black">Search By</label>
+    <select class="w3-select w3-border w3-round" name="field" required>
+        <option value="" disabled selected>Choose a field</option>
+        <option value="title">Title</option>
+        <option value="year">Year</option>
+        <option value="rating">Rating</option>
+        <option value="duration">Duration</option>
+        <option value="genre">Genre</option>
+    </select>
+
+    <label class="w3-text-black w3-margin-top">Enter Value</label>
+    <input
+        class="w3-input w3-border w3-round"
+        type="text"
+        name="value"
+        required
+    />
+
+    <button class="w3-button w3-blue w3-margin-top w3-round" type="submit">
+        Search
+    </button>
+</form>
+
+{% if error %}
+<p class="w3-panel w3-red w3-padding">{{ error }}</p>
+{% endif %} {% if results %}
+<h3 class="w3-margin-top">Results:</h3>
+<table class="w3-table w3-bordered w3-striped w3-white">
+    <thead>
+        <tr>
+            {% for col in columns %}
+            <th>{{ col }}</th>
+            {% endfor %}
+        </tr>
+    </thead>
+    <tbody>
+        {% for row in results %}
+        <tr>
+            {% for item in row %}
+            <td>{{ item }}</td>
+            {% endfor %}
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endif %} {% endblock %}

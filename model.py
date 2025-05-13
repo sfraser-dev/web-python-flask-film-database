@@ -3,7 +3,7 @@ import os
 
 
 # Handles DB operations for FilmFlix
-class Filmflix_db:
+class FilmflixModel:
     def __init__(self):
         base_dir = os.path.abspath(os.path.dirname(__file__))
         db_path = os.path.join(base_dir, "filmflix.db")
@@ -44,3 +44,28 @@ class Filmflix_db:
         sql = f"UPDATE films SET {column_name} = ? WHERE id = ?"
         self.cursor.execute(sql, (new_value, film_id))
         self.con.commit()
+
+    def get_films_by_title(self, title):
+        sql = "SELECT * FROM films WHERE title LIKE ?"
+        self.cursor.execute(sql, ("%" + title + "%",))
+        return self.cursor.fetchall()
+
+    def get_films_by_year(self, year):
+        sql = "SELECT * FROM films WHERE year = ?"
+        self.cursor.execute(sql, (year,))
+        return self.cursor.fetchall()
+
+    def get_films_by_rating(self, rating):
+        sql = "SELECT * FROM films WHERE rating = ?"
+        self.cursor.execute(sql, (rating,))
+        return self.cursor.fetchall()
+
+    def get_films_by_duration(self, duration):
+        sql = "SELECT * FROM films WHERE duration = ?"
+        self.cursor.execute(sql, (duration,))
+        return self.cursor.fetchall()
+
+    def get_films_by_genre(self, genre):
+        sql = "SELECT * FROM films WHERE genre = ?"
+        self.cursor.execute(sql, (genre,))
+        return self.cursor.fetchall()
