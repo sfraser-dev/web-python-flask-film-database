@@ -1,12 +1,14 @@
 <!-- markdownlint-disable MD007 -->
 # Film Database Project (FilmFlix)
 
+A small film database using Flask and SQLite.
+
 ## MVC
 
 This project is built using the Model-View-Controller (MVC) design pattern:
 
 - Model:
-    - `FilmFlix_db.py` handles all interactions with the SQLite database (queries, inserts, updates, deletes)
+    - `model.py` handles all interactions with the SQLite database (queries, inserts, updates, deletes)
 - View:
     - HTML templates in the templates/ folder (using Jinja2) display dynamic content in the browser
 - Controller:
