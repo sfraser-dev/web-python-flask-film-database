@@ -20,6 +20,7 @@ class Filmflix_db:
         self.con.close()
 
     def add_film(self, title, year, rating, duration, genre):
+        # parameterised query to prevent SQL injection ("?" placeholders)
         sql = "INSERT INTO films (title, year, rating, duration, genre) VALUES (?, ?, ?, ?, ?)"
         values = (title, year, rating, duration, genre)
         self.cursor.execute(sql, values)
