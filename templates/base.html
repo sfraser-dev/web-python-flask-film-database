@@ -23,38 +23,94 @@
     </head>
     <body>
         <body class="w3-light-grey">
-            <header class="w3-container w3-blue w3-padding-32 w3-center">
-                <h1 id="logo" class="w3-xxxlarge">FilmFlix</h1>
-                <nav class="w3-bar w3-light-grey w3-padding-small w3-center">
+            <header class="w3-blue w3-padding-16">
+                <div class="w3-container w3-center">
+                    <h1
+                        id="logo"
+                        class="w3-xxlarge w3-text-white"
+                        style="cursor: pointer"
+                    >
+                        FilmFlix
+                    </h1>
+                </div>
+
+                <nav
+                    class="w3-bar w3-light-gray w3-card w3-padding-small w3-center w3-hide-small"
+                >
                     <a
+                        href="{{ url_for('home') }}"
                         class="w3-bar-item w3-button w3-hover-blue"
+                        >Home</a
+                    >
+                    <a
                         href="{{ url_for('all_films') }}"
+                        class="w3-bar-item w3-button w3-hover-blue"
                         >Films</a
                     >
                     <a
-                        class="w3-bar-item w3-button w3-hover-blue"
                         href="{{ url_for('add_film') }}"
-                        >Add Film</a
+                        class="w3-bar-item w3-button w3-hover-blue"
+                        >Add</a
                     >
                     <a
-                        class="w3-bar-item w3-button w3-hover-blue"
                         href="{{ url_for('delete_film') }}"
-                        >Delete Film</a
+                        class="w3-bar-item w3-button w3-hover-blue"
+                        >Delete</a
                     >
                     <a
-                        class="w3-bar-item w3-button w3-hover-blue"
                         href="{{ url_for('amend_film') }}"
-                        >Amend Film</a
+                        class="w3-bar-item w3-button w3-hover-blue"
+                        >Amend</a
                     >
                     <a
-                        class="w3-bar-item w3-button w3-hover-blue"
                         href="{{ url_for('search') }}"
+                        class="w3-bar-item w3-button w3-hover-blue"
+                        >Search</a
+                    >
+                </nav>
+
+                <!-- Collapsed view for small screens -->
+                <nav
+                    class="w3-bar-block w3-light-gray w3-hide-medium w3-hide-large w3-padding-small w3-center"
+                >
+                    <a
+                        href="{{ url_for('home') }}"
+                        class="w3-bar-item w3-button w3-hover-blue"
+                        >Home</a
+                    >
+                    <a
+                        href="{{ url_for('all_films') }}"
+                        class="w3-bar-item w3-button w3-hover-blue"
+                        >Films</a
+                    >
+                    <a
+                        href="{{ url_for('add_film') }}"
+                        class="w3-bar-item w3-button w3-hover-blue"
+                        >Add</a
+                    >
+                    <a
+                        href="{{ url_for('delete_film') }}"
+                        class="w3-bar-item w3-button w3-hover-blue"
+                        >Delete</a
+                    >
+                    <a
+                        href="{{ url_for('amend_film') }}"
+                        class="w3-bar-item w3-button w3-hover-blue"
+                        >Amend</a
+                    >
+                    <a
+                        href="{{ url_for('search') }}"
+                        class="w3-bar-item w3-button w3-hover-blue"
                         >Search</a
                     >
                 </nav>
             </header>
 
             <div class="w3-container w3-white w3-card w3-margin w3-padding">
+                <!-- <div
+                class="w3-container w3-white w3-card w3-margin w3-padding w3-animate-opacity"
+                style="max-width: 1000px; margin: auto"
+            > -->
                 {% block content %}
                 <h2 class="w3-center">Welcome to FilmFlix</h2>
                 <p class="w3-center">A small movie database</p>

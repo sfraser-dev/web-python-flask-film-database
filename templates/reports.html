@@ -4,7 +4,11 @@ block content %}
 
 <form class="w3-container" method="POST" action="{{ url_for('search') }}">
     <label class="w3-text-black">Search By</label>
-    <select class="w3-select w3-border w3-round" name="field" required>
+    <select
+        class="w3-select w3-border w3-round w3-margin-bottom"
+        name="field"
+        required
+    >
         <option value="" disabled selected>Choose a field</option>
         <option value="title">Title</option>
         <option value="year">Year</option>
@@ -13,9 +17,9 @@ block content %}
         <option value="genre">Genre</option>
     </select>
 
-    <label class="w3-text-black w3-margin-top">Enter Value</label>
+    <label class="w3-text-black">Enter Value</label>
     <input
-        class="w3-input w3-border w3-round"
+        class="w3-input w3-border w3-round w3-margin-bottom"
         type="text"
         name="value"
         required
@@ -31,23 +35,25 @@ block content %}
 {% endif %} {% if message %}
 <p class="w3-panel w3-yellow w3-padding">{{ message }}</p>
 {% endif %} {% if results %}
-<h3 class="w3-margin-top">Results:</h3>
-<table class="w3-table w3-bordered w3-striped w3-white">
-    <thead>
-        <tr>
-            {% for col in columns %}
-            <th>{{ col }}</th>
+<div class="w3-responsive">
+    <h3 class="w3-margin-top">Results:</h3>
+    <table class="w3-table w3-bordered w3-striped w3-white">
+        <thead>
+            <tr>
+                {% for col in columns %}
+                <th>{{ col }}</th>
+                {% endfor %}
+            </tr>
+        </thead>
+        <tbody>
+            {% for row in results %}
+            <tr>
+                {% for item in row %}
+                <td>{{ item }}</td>
+                {% endfor %}
+            </tr>
             {% endfor %}
-        </tr>
-    </thead>
-    <tbody>
-        {% for row in results %}
-        <tr>
-            {% for item in row %}
-            <td>{{ item }}</td>
-            {% endfor %}
-        </tr>
-        {% endfor %}
-    </tbody>
-</table>
+        </tbody>
+    </table>
+</div>
 {% endif %} {% endblock %}
