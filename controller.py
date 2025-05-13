@@ -80,9 +80,47 @@ def delete_film():
     return render_template("deletefilm.html", films=films)
 
 
-@app.route("/amend_film")
+@app.route("/amend_film", methods=["GET", "POST"])
 def amend_film():
-    return "<h2>Amend Film TODO</h2>"
+    from FilmFlix_db import Filmflix_db
+
+    db = Filmflix_db()
+    films = db.get_all_films()
+    db.close()
+
+    if request.method == "POST":
+        film_id_str = request.form.get("filmID")
+        column = request.form.get("column")
+        new_value = request.form.get("new_value")
+
+        if not film_id_str or not film_id_str.isdigit():
+            return render_template(
+                "amendfilm.html", films=films, error="Please select a valid film"
+            )
+
+        if column not in ["title", "year", "rating", "duration", "genre"]:
+            return render_template(
+                "amendfilm.html", films=films, error="Invalid field selection"
+            )
+
+        if not new_value:
+            return render_template(
+                "amendfilm.html", films=films, error="Please enter a new value"
+            )
+
+        film_id = int(film_id_str)
+        db = Filmflix_db()
+        if not db.film_exists(film_id):
+            db.close()
+            return render_template(
+                "amendfilm.html", films=films, error="Film not found"
+            )
+
+        db.update_film_field(film_id, column, new_value)
+        db.close()
+        return render_template("amendfilm.html", films=films, success=True)
+
+    return render_template("amendfilm.html", films=films)
 
 
 @app.route("/display_films_by_x")

@@ -1,0 +1,41 @@
+{% extends "base.html" %} {% block title %}Amend Film{% endblock %} {% block
+content %}
+<h2 class="w3-center w3-text-blue">Amend a Film</h2>
+
+<form class="w3-container" action="{{ url_for('amend_film') }}" method="POST">
+    <label class="w3-text-black">Select Film</label>
+    <select class="w3-select w3-border w3-round" name="filmID" required>
+        <option value="" disabled selected>Choose a film</option>
+        {% for film in films %}
+        <option value="{{ film[0] }}">{{ film[0] }} - {{ film[1] }}</option>
+        {% endfor %}
+    </select>
+
+    <label class="w3-text-black w3-margin-top">Field to Update</label>
+    <select class="w3-select w3-border w3-round" name="column" required>
+        <option value="" disabled selected>Choose a field</option>
+        <option value="title">Title</option>
+        <option value="year">Year Released</option>
+        <option value="rating">Rating</option>
+        <option value="duration">Duration</option>
+        <option value="genre">Genre</option>
+    </select>
+
+    <label class="w3-text-black w3-margin-top">New Value</label>
+    <input
+        class="w3-input w3-border w3-round"
+        type="text"
+        name="new_value"
+        required
+    />
+
+    <button class="w3-button w3-blue w3-margin-top w3-round" type="submit">
+        Update Film
+    </button>
+</form>
+
+{% if success %}
+<p class="w3-panel w3-green w3-padding">Film updated successfully!</p>
+{% elif error %}
+<p class="w3-panel w3-red w3-padding">{{ error }}</p>
+{% endif %} {% endblock %}

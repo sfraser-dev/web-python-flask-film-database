@@ -34,3 +34,12 @@ class Filmflix_db:
         sql = "DELETE FROM films WHERE id = ?"
         self.cursor.execute(sql, (film_id,))
         self.con.commit()
+
+    def update_film_field(self, film_id, column_name, new_value):
+        allowed_fields = ["title", "year", "rating", "duration", "genre"]
+        if column_name not in allowed_fields:
+            raise ValueError("Invalid column name")
+
+        sql = f"UPDATE films SET {column_name} = ? WHERE id = ?"
+        self.cursor.execute(sql, (new_value, film_id))
+        self.con.commit()
